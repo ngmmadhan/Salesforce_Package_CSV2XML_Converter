@@ -33,7 +33,7 @@ body {
 /*header*/
 
 #header {
-	
+
 	color: #FFF;
 	width: 300px;
 	overflow: auto;
@@ -100,7 +100,8 @@ p {
 #converter {
 	position: absolute;
 	top: 15px;
-	left: 330px;
+	/*left: 330px;*/
+	left: 15px;
 	border-color:#000000 #666666 #666666 #000000;
   border-style:solid;
   border-width:2px;
@@ -113,7 +114,7 @@ p.dataHeaders{
 }
 
 .textInputs {
-  
+
   background-color: #C9B7C7;
   border: none;
   color: #664D63;
@@ -132,7 +133,8 @@ p.dataHeaders{
   width: 100%;
   color: #FFF;
   height: 45px;
-  background-color:#5F255C;
+  /*background-color:#5F255C;*/
+  background-color:#005fb2;
   background-image: url('../images/header_gradient.png');
 }
 
@@ -155,12 +157,12 @@ p.groupHeadline {
 }
 
 #dataInput {
-	
+
 }
 
 #dataOutput {
 
-	
+
 }
 #dataSelector {
 	width: 200px;

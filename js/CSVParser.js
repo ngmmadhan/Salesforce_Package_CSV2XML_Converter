@@ -156,7 +156,7 @@ var CSVParser = {
 
 
 
-
+		console.log(dataArray);
 
     return {'dataGrid':dataArray, 'headerNames':headerNames, 'headerTypes':headerTypes, 'errors':this.getLog()}
 

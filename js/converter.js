@@ -17,21 +17,22 @@ function DataConverter(nodeId) {
   this.node                   = $("#"+nodeId);
 
   this.outputDataTypes        = [
-                                {"text":"Actionscript",           "id":"as",               "notes":""},
-                                {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
-                                {"text":"HTML",                   "id":"html",             "notes":""},
-                                {"text":"JSON - Properties",      "id":"json",             "notes":""},
-                                {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
-                                {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
-                                {"text":"JSON - Dictionary",      "id":"jsonDict",         "notes":""},
-                                {"text":"MySQL",                  "id":"mysql",            "notes":""},
-                                {"text":"PHP",                    "id":"php",              "notes":""},
-                                {"text":"Python - Dict",          "id":"python",           "notes":""},
-                                {"text":"Ruby",                   "id":"ruby",             "notes":""},
-                                {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
-                                {"text":"XML - Nodes",            "id":"xml",              "notes":""},
-                                {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
-  this.outputDataType         = "json";
+                                // {"text":"Actionscript",           "id":"as",               "notes":""},
+                                // {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
+                                // {"text":"HTML",                   "id":"html",             "notes":""},
+                                // {"text":"JSON - Properties",      "id":"json",             "notes":""},
+                                // {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
+                                // {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
+                                // {"text":"JSON - Dictionary",      "id":"jsonDict",         "notes":""},
+                                // {"text":"MySQL",                  "id":"mysql",            "notes":""},
+                                // {"text":"PHP",                    "id":"php",              "notes":""},
+                                // {"text":"Python - Dict",          "id":"python",           "notes":""},
+                                // {"text":"Ruby",                   "id":"ruby",             "notes":""},
+                                // {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
+                                // {"text":"XML - Nodes",            "id":"xml",              "notes":""},
+                                // {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
+                                {"text":"XML Package",      "id":"sfPackageXml",   "notes":""}];
+  this.outputDataType         = "sfPackageXml"; // Changed by Madhan
 
   this.columnDelimiter        = "\t";
   this.rowDelimiter           = "\n";
@@ -135,10 +136,9 @@ DataConverter.prototype.resize = function(w,h) {
 }
 
 DataConverter.prototype.convert = function() {
-
-  this.inputText = this.inputTextArea.val();
+  this.inputText = 'types	members' + "\n" ; // Madhan - Hardcoded the headers
+	this.inputText += this.inputTextArea.val();
   this.outputText = "";
-
 
   //make sure there is input data before converting...
   if (this.inputText.length > 0) {
@@ -155,7 +155,7 @@ DataConverter.prototype.convert = function() {
     CSVParser.resetLog();
     var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
 
-    var dataGrid = parseOutput.dataGrid;
+    var dataGrid =  parseOutput.dataGrid;
     var headerNames = parseOutput.headerNames;
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
@@ -170,7 +170,6 @@ DataConverter.prototype.convert = function() {
 
 
 DataConverter.prototype.insertSampleData = function() {
-  this.inputTextArea.val("NAME\tVALUE\tCOLOR\tDATE\nAlan\t12\tblue\tSep. 25, 2009\nShan\t13\t\"green\tblue\"\tSep. 27, 2009\nJohn\t45\torange\tSep. 29, 2009\nMinna\t27\tteal\tSep. 30, 2009");
+  // this.inputTextArea.val("NAME\tVALUE\tCOLOR\tDATE\nAlan\t12\tblue\tSep. 25, 2009\nShan\t13\t\"green\tblue\"\tSep. 27, 2009\nJohn\t45\torange\tSep. 29, 2009\nMinna\t27\tteal\tSep. 30, 2009");
+	this.inputTextArea.val("ApexPage\tCustomerDetailPage\nApexPage\tCustomerEditPage\nAuraDefinitionBundle\tCustomerDetailComponent\nCustomLabel\tCustomerDetailPage_Header\nAuraDefinitionBundle\tCustomerDetailApp\n");
 }
-
-

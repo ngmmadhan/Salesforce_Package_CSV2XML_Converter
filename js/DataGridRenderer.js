@@ -1,227 +1,243 @@
-// 
+//
 //  DataGridRenderer.js
 //  Part of Mr-Data-Converter
-//  
+//
 //  Created by Shan Carter on 2010-10-18.
-// 
+//
 
 
 var DataGridRenderer = {
-  
+
   //---------------------------------------
   // Actionscript
   //---------------------------------------
-  
-  as: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+
+  as: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
     var outputText = "[";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loops
-    for (var i=0; i < numRows; i++) {
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += "{";
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"'+( row[j] || "" )+'"';
-        };      
+          var rowOutput = '"' + (row[j] || "") + '"';
+        };
         outputText += (headerNames[j] + ":" + rowOutput)
-        if (j < (numColumns-1)) {outputText+=","};
+        if (j < (numColumns - 1)) {
+          outputText += ","
+        };
       };
       outputText += "}";
-      if (i < (numRows-1)) {outputText += ","+newLine};
+      if (i < (numRows - 1)) {
+        outputText += "," + newLine
+      };
     };
     outputText += "];";
-    
-    
+
+
     return outputText;
   },
-  
-  
+
+
   //---------------------------------------
   // ASP / VBScript
   //---------------------------------------
-  
-  asp: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+
+  asp: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "'";
     var commentLineEnd = "";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
-    for (var i=0; i < numRows; i++) {
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"'+( row[j] || "" )+'"';
+          var rowOutput = '"' + (row[j] || "") + '"';
         };
-      outputText += 'myArray('+j+','+i+') = '+rowOutput+newLine;        
+        outputText += 'myArray(' + j + ',' + i + ') = ' + rowOutput + newLine;
       };
     };
-    outputText = 'Dim myArray('+(j-1)+','+(i-1)+')'+newLine+outputText;
-    
+    outputText = 'Dim myArray(' + (j - 1) + ',' + (i - 1) + ')' + newLine + outputText;
+
     return outputText;
   },
-  
-  
+
+
   //---------------------------------------
   // HTML Table
   //---------------------------------------
-  
-  html: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+
+  html: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
-    outputText += "<table>"+newLine;
-    outputText += indent+"<thead>"+newLine;
-    outputText += indent+indent+"<tr>"+newLine;
-    
-    for (var j=0; j < numColumns; j++) {
-      outputText += indent+indent+indent+'<th class="'+headerNames[j]+'-cell">';          
+    outputText += "<table>" + newLine;
+    outputText += indent + "<thead>" + newLine;
+    outputText += indent + indent + "<tr>" + newLine;
+
+    for (var j = 0; j < numColumns; j++) {
+      outputText += indent + indent + indent + '<th class="' + headerNames[j] + '-cell">';
       outputText += headerNames[j];
-      outputText += '</th>'+newLine;
+      outputText += '</th>' + newLine;
     };
-    outputText += indent+indent+"</tr>"+newLine;
-    outputText += indent+"</thead>"+newLine;
-    outputText += indent+"<tbody>"+newLine;
-    for (var i=0; i < numRows; i++) {
+    outputText += indent + indent + "</tr>" + newLine;
+    outputText += indent + "</thead>" + newLine;
+    outputText += indent + "<tbody>" + newLine;
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
       var rowClassName = ""
-      if (i === numRows-1) {
+      if (i === numRows - 1) {
         rowClassName = ' class="lastRow"';
-      } else if (i === 0){
+      } else if (i === 0) {
         rowClassName = ' class="firstRow"';
       }
-      outputText += indent+indent+"<tr"+rowClassName+">"+newLine;
-      for (var j=0; j < numColumns; j++) {
-        outputText += indent+indent+indent+'<td class="'+headerNames[j]+'-cell">';          
+      outputText += indent + indent + "<tr" + rowClassName + ">" + newLine;
+      for (var j = 0; j < numColumns; j++) {
+        outputText += indent + indent + indent + '<td class="' + headerNames[j] + '-cell">';
         outputText += row[j]
-        outputText += '</td>'+newLine
+        outputText += '</td>' + newLine
       };
-      outputText += indent+indent+"</tr>"+newLine;
+      outputText += indent + indent + "</tr>" + newLine;
     };
-    outputText += indent+"</tbody>"+newLine;
+    outputText += indent + "</tbody>" + newLine;
     outputText += "</table>";
-    
+
     return outputText;
   },
-  
-  
+
+
   //---------------------------------------
   // JSON properties
   //---------------------------------------
-  
-  json: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+
+  json: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
     var outputText = "[";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
-    for (var i=0; i < numRows; i++) {
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += "{";
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"' + ( row[j] || "" ) + '"';
+          var rowOutput = '"' + (row[j] || "") + '"';
         };
-  
-      outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
-  
-        if (j < (numColumns-1)) {outputText+=","};
+
+        outputText += ('"' + headerNames[j] + '"' + ":" + rowOutput);
+
+        if (j < (numColumns - 1)) {
+          outputText += ","
+        };
       };
       outputText += "}";
-      if (i < (numRows-1)) {outputText += ","+newLine};
+      if (i < (numRows - 1)) {
+        outputText += "," + newLine
+      };
     };
     outputText += "]";
-    
+
     return outputText;
   },
-  
+
   //---------------------------------------
   // JSON Array of Columns
   //---------------------------------------
-  jsonArrayCols: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  jsonArrayCols: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
-    outputText += "{"+newLine;
-    for (var i=0; i < numColumns; i++) {
-      outputText += indent+'"'+headerNames[i]+'":[';
-      for (var j=0; j < numRows; j++) {
-        if ((headerTypes[i] == "int")||(headerTypes[i] == "float")) {
+    outputText += "{" + newLine;
+    for (var i = 0; i < numColumns; i++) {
+      outputText += indent + '"' + headerNames[i] + '":[';
+      for (var j = 0; j < numRows; j++) {
+        if ((headerTypes[i] == "int") || (headerTypes[i] == "float")) {
           outputText += dataGrid[j][i] || 0;
         } else {
-          outputText += '"'+(dataGrid[j][i] || "")+'"' ;
+          outputText += '"' + (dataGrid[j][i] || "") + '"';
         }
-        if (j < (numRows-1)) {outputText+=","};
+        if (j < (numRows - 1)) {
+          outputText += ","
+        };
       };
       outputText += "]";
-      if (i < (numColumns-1)) {outputText += ","+newLine};
+      if (i < (numColumns - 1)) {
+        outputText += "," + newLine
+      };
     };
-    outputText += newLine+"}";
-    
-    
+    outputText += newLine + "}";
+
+
     return outputText;
   },
-  
-  
+
+
   //---------------------------------------
   // JSON Array of Rows
   //---------------------------------------
-  jsonArrayRows: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  jsonArrayRows: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
-    outputText += "["+newLine;
-    for (var i=0; i < numRows; i++) {
-      outputText += indent+"[";
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+    outputText += "[" + newLine;
+    for (var i = 0; i < numRows; i++) {
+      outputText += indent + "[";
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           outputText += dataGrid[i][j] || 0;
         } else {
-          outputText += '"'+(dataGrid[i][j] || "")+'"' ;
+          outputText += '"' + (dataGrid[i][j] || "") + '"';
         }
-        if (j < (numColumns-1)) {outputText+=","};
+        if (j < (numColumns - 1)) {
+          outputText += ","
+        };
       };
       outputText += "]";
-      if (i < (numRows-1)) {outputText += ","+newLine};
+      if (i < (numRows - 1)) {
+        outputText += "," + newLine
+      };
     };
-    outputText += newLine+"]";
-    
-    
+    outputText += newLine + "]";
+
+
     return outputText;
   },
-  
-  
+
+
 
   //---------------------------------------
   // JSON Dictionary
@@ -255,10 +271,10 @@ var DataGridRenderer = {
     outputText += newLine + "}";
 
     function _fmtVal(i, j) {
-      if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+      if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
         return dataGrid[i][j] || 0;
       } else {
-        return '"'+(dataGrid[i][j] || "")+'"' ;
+        return '"' + (dataGrid[i][j] || "") + '"';
       }
     }
 
@@ -269,7 +285,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // MYSQL
   //---------------------------------------
-  mysql: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  mysql: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "/*";
     var commentLineEnd = "*/";
@@ -277,50 +293,58 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
-    
+
     //begin render loop
-    outputText += 'CREATE TABLE '+tableName+' (' + newLine;
-    outputText += indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+newLine;
-    for (var j=0; j < numColumns; j++) {
+    outputText += 'CREATE TABLE ' + tableName + ' (' + newLine;
+    outputText += indent + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," + newLine;
+    for (var j = 0; j < numColumns; j++) {
       var dataType = "VARCHAR(255)";
-      if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+      if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
         dataType = headerTypes[j].toUpperCase();
       };
-      outputText += indent+""+headerNames[j]+" "+dataType;
-      if (j < numColumns - 1) {outputText += ","};
+      outputText += indent + "" + headerNames[j] + " " + dataType;
+      if (j < numColumns - 1) {
+        outputText += ","
+      };
       outputText += newLine;
     };
     outputText += ');' + newLine;
-    outputText += "INSERT INTO "+tableName+" "+newLine+indent+"(";
-    for (var j=0; j < numColumns; j++) {
+    outputText += "INSERT INTO " + tableName + " " + newLine + indent + "(";
+    for (var j = 0; j < numColumns; j++) {
       outputText += headerNames[j];
-      if (j < numColumns - 1) {outputText += ","};
+      if (j < numColumns - 1) {
+        outputText += ","
+      };
     };
-    outputText += ") "+newLine+"VALUES "+newLine;
-    for (var i=0; i < numRows; i++) {
-      outputText += indent+"(";
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
+    outputText += ") " + newLine + "VALUES " + newLine;
+    for (var i = 0; i < numRows; i++) {
+      outputText += indent + "(";
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           outputText += dataGrid[i][j] || "null";
         } else {
-          outputText += "'"+( dataGrid[i][j] || "" )+"'";
+          outputText += "'" + (dataGrid[i][j] || "") + "'";
         };
-        
-        if (j < numColumns - 1) {outputText += ","};
+
+        if (j < numColumns - 1) {
+          outputText += ","
+        };
       };
       outputText += ")";
-      if (i < numRows - 1) {outputText += ","+newLine;};
+      if (i < numRows - 1) {
+        outputText += "," + newLine;
+      };
     };
     outputText += ";";
-    
+
     return outputText;
   },
-  
-  
+
+
   //---------------------------------------
   // PHP
   //---------------------------------------
-  php: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  php: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -328,69 +352,77 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
-    
+
     //begin render loop
     outputText += "array(" + newLine;
-    for (var i=0; i < numRows; i++) {
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += indent + "array(";
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"'+(row[j] || "")+'"';
-        };          
-        outputText += ('"'+headerNames[j]+'"' + "=>" + rowOutput)
-        if (j < (numColumns-1)) {outputText+=","};
+          var rowOutput = '"' + (row[j] || "") + '"';
+        };
+        outputText += ('"' + headerNames[j] + '"' + "=>" + rowOutput)
+        if (j < (numColumns - 1)) {
+          outputText += ","
+        };
       };
       outputText += ")";
-      if (i < (numRows-1)) {outputText += ","+newLine};
+      if (i < (numRows - 1)) {
+        outputText += "," + newLine
+      };
     };
     outputText += newLine + ");";
-    
+
     return outputText;
   },
-  
+
   //---------------------------------------
   // Python dict
   //---------------------------------------
-  
-  python: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+
+  python: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
     var outputText = "[";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
-    for (var i=0; i < numRows; i++) {
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += "{";
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           var rowOutput = row[j] || "None";
         } else {
-          var rowOutput = '"'+(row[j] || "")+'"';
+          var rowOutput = '"' + (row[j] || "") + '"';
         };
-  
-      outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
-  
-        if (j < (numColumns-1)) {outputText+=","};
+
+        outputText += ('"' + headerNames[j] + '"' + ":" + rowOutput);
+
+        if (j < (numColumns - 1)) {
+          outputText += ","
+        };
       };
       outputText += "}";
-      if (i < (numRows-1)) {outputText += ","+newLine};
+      if (i < (numRows - 1)) {
+        outputText += "," + newLine
+      };
     };
     outputText += "];";
-    
+
     return outputText;
   },
-  
-  
+
+
   //---------------------------------------
   // Ruby
   //---------------------------------------
-  ruby: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  ruby: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "#";
     var commentLineEnd = "";
@@ -398,141 +430,236 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
-    
+
     //begin render loop
     outputText += "[";
-    for (var i=0; i < numRows; i++) {
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += "{";
-      for (var j=0; j < numColumns; j++) {
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+      for (var j = 0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int") || (headerTypes[j] == "float")) {
           var rowOutput = row[j] || "nil"
         } else {
-          var rowOutput = '"'+(row[j] || "")+'"';
-        };         
-        outputText += ('"'+headerNames[j]+'"' + "=>" + rowOutput)
-        if (j < (numColumns-1)) {outputText+=","};
+          var rowOutput = '"' + (row[j] || "") + '"';
+        };
+        outputText += ('"' + headerNames[j] + '"' + "=>" + rowOutput)
+        if (j < (numColumns - 1)) {
+          outputText += ","
+        };
       };
       outputText += "}";
-      if (i < (numRows-1)) {outputText += ","+newLine};
+      if (i < (numRows - 1)) {
+        outputText += "," + newLine
+      };
     };
     outputText += "];";
-    
+
     return outputText;
   },
-  
-  
+
+
   //---------------------------------------
   // XML Nodes
   //---------------------------------------
-  xml: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
     outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
-    outputText += "<rows>"+newLine;
-    for (var i=0; i < numRows; i++) {
+    outputText += "<rows>" + newLine;
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
-      outputText += indent+"<row>"+newLine;
-      for (var j=0; j < numColumns; j++) {
-        outputText += indent+indent+'<'+headerNames[j]+'>';          
+      outputText += indent + "<row>" + newLine;
+      for (var j = 0; j < numColumns; j++) {
+        outputText += indent + indent + '<' + headerNames[j] + '>';
         outputText += row[j] || ""
-        outputText += '</'+headerNames[j]+'>'+newLine
+        outputText += '</' + headerNames[j] + '>' + newLine
       };
-      outputText += indent+"</row>"+newLine;
+      outputText += indent + "</row>" + newLine;
     };
     outputText += "</rows>";
-    
+
     return outputText;
-    
+
   },
-  
-  
-  
+
+
+
   //---------------------------------------
   // XML properties
   //---------------------------------------
-  xmlProperties: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  xmlProperties: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-  
+
     //begin render loop
     outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
-    outputText += "<rows>"+newLine;
-    for (var i=0; i < numRows; i++) {
+    outputText += "<rows>" + newLine;
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
-      outputText += indent+"<row ";
-      for (var j=0; j < numColumns; j++) {
-        outputText += headerNames[j]+'=';          
+      outputText += indent + "<row ";
+      for (var j = 0; j < numColumns; j++) {
+        outputText += headerNames[j] + '=';
         outputText += '"' + row[j] + '" ';
       };
-      outputText += "></row>"+newLine;
+      outputText += "></row>" + newLine;
     };
     outputText += "</rows>";
-    
+
     return outputText;
-    
+
   },
-  
+
   //---------------------------------------
   // XML Illustrator
   //---------------------------------------
-  xmlIllustrator: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  xmlIllustrator: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    
+
     //begin render loop
     outputText = '<?xml version="1.0" encoding="utf-8"?>' + newLine;
     outputText += '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN"    "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd" [' + newLine;
-    outputText += indent+'<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">' + newLine;
-    outputText += indent+'<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">' + newLine;
-    outputText += indent+'<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">' + newLine;
-    outputText += indent+'<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
-    outputText += indent+'<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">' + newLine;
-    outputText += indent+'<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">' + newLine;
+    outputText += indent + '<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">' + newLine;
+    outputText += indent + '<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">' + newLine;
+    outputText += indent + '<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">' + newLine;
+    outputText += indent + '<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
+    outputText += indent + '<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">' + newLine;
+    outputText += indent + '<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">' + newLine;
     outputText += ']>' + newLine;
     outputText += '<svg>' + newLine;
     outputText += '<variableSets  xmlns="&ns_vars;">' + newLine;
-    outputText += indent+'<variableSet  varSetName="binding1" locked="none">' + newLine;
-    outputText += indent+indent+'<variables>' + newLine;
-    for (var i=0; i < numColumns; i++) {
-      outputText += indent+indent+indent+'<variable varName="'+headerNames[i]+'" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
+    outputText += indent + '<variableSet  varSetName="binding1" locked="none">' + newLine;
+    outputText += indent + indent + '<variables>' + newLine;
+    for (var i = 0; i < numColumns; i++) {
+      outputText += indent + indent + indent + '<variable varName="' + headerNames[i] + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
     };
-    outputText += indent+indent+'</variables>' + newLine;
-    outputText += indent+indent+'<v:sampleDataSets  xmlns:v="http://ns.adobe.com/Variables/1.0/" xmlns="http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
-    
-    for (var i=0; i < numRows; i++) {
+    outputText += indent + indent + '</variables>' + newLine;
+    outputText += indent + indent + '<v:sampleDataSets  xmlns:v="http://ns.adobe.com/Variables/1.0/" xmlns="http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
+
+    for (var i = 0; i < numRows; i++) {
       var row = dataGrid[i];
-      outputText += indent+indent+indent+'<v:sampleDataSet dataSetName="' + row[0] + '">'+newLine;
-      for (var j=0; j < numColumns; j++) {
-        outputText += indent+indent+indent+indent+'<'+headerNames[j]+'>'+newLine;          
-        outputText += indent+indent+indent+indent+indent+'<p>' + row[j] + '</p>' +newLine;
-        outputText += indent+indent+indent+indent+'</'+headerNames[j]+'>'+newLine
+      outputText += indent + indent + indent + '<v:sampleDataSet dataSetName="' + row[0] + '">' + newLine;
+      for (var j = 0; j < numColumns; j++) {
+        outputText += indent + indent + indent + indent + '<' + headerNames[j] + '>' + newLine;
+        outputText += indent + indent + indent + indent + indent + '<p>' + row[j] + '</p>' + newLine;
+        outputText += indent + indent + indent + indent + '</' + headerNames[j] + '>' + newLine
       };
-      outputText += indent+indent+indent+'</v:sampleDataSet>'+newLine;
+      outputText += indent + indent + indent + '</v:sampleDataSet>' + newLine;
     };
-    
-    outputText += indent+indent+'</v:sampleDataSets>' + newLine;
-    outputText += indent+'</variableSet>' + newLine;
+
+    outputText += indent + indent + '</v:sampleDataSets>' + newLine;
+    outputText += indent + '</variableSet>' + newLine;
     outputText += '</variableSets>' + newLine;
     outputText += '</svg>' + newLine;
-    
-    
+
+
     return outputText;
-    
+
   },
-  
+
+  //---------------------------------------
+  // sfPackageXml Deploy Package
+  //---------------------------------------
+  sfPackageXml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+
+    //inits...
+    var commentLine = "<!--";
+    var commentLineEnd = "-->";
+    var outputText = "";
+    var typesText = "";
+    var membersText = "";
+    var typeName = "";
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+
+    // Group members of Same type
+    var groupedData = this.groupedData(dataGrid);
+
+    outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
+    outputText += '<Package xmlns="http://soap.sforce.com/2006/04/metadata">' + newLine;;
+
+    for (var i = 0; i < Object.keys(groupedData).length; i++) {
+      typesText = "";
+      membersText = "";
+      typesText += '<types>' + newLine;
+      typeName = Object.keys(groupedData)[i];
+      for (var j = 0; j < groupedData[typeName].length; j++) {
+        membersText += '<members>' + groupedData[typeName][j].members + '</members>' + newLine;
+      }
+      typesText += membersText;
+      typesText += '<name>' + typeName + '</name>' + newLine;
+      typesText += '</types>' + newLine;
+      outputText += typesText;
+    }
+    outputText += '<version>38.0</version>' + newLine;;
+    outputText += '</Package>';
+    return this.formatXml(outputText);
+  },
+
+  convertToArrayOfObjects: function(data) {
+    var collection = data.slice(); // make a copy
+    var keys = collection.shift();
+    collection = collection.map(function(e) {
+      var obj = {};
+      keys.forEach(function(key, i) {
+        obj[key] = e[i];
+      });
+      return obj;
+    });
+    return collection;
+  },
+
+  groupedData: function(data) {
+    var ObjArray = null;
+    var groupedData = null;
+    ObjArray = this.convertToArrayOfObjects(data);
+    groupedData = _.groupBy(ObjArray, function(innerArray) {
+      return innerArray.types;
+    });
+    return groupedData;
+  },
+
+  formatXml: function(xml) {
+    var formatted = '';
+    var reg = /(>)(<)(\/*)/g;
+    xml = xml.replace(reg, '$1\r\n$2$3');
+    var pad = 0;
+    jQuery.each(xml.split('\r\n'), function(index, node) {
+      var indent = 0;
+      if (node.match(/.+<\/\w[^>]*>$/)) {
+        indent = 0;
+      } else if (node.match(/^<\/\w/)) {
+        if (pad != 0) {
+          pad -= 1;
+        }
+      } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) {
+        indent = 1;
+      } else {
+        indent = 0;
+      }
+
+      var padding = '';
+      for (var i = 0; i < pad; i++) {
+        padding += '  ';
+      }
+
+      formatted += padding + node + '\r\n';
+      pad += indent;
+    });
+    return formatted;
+  },
 }
