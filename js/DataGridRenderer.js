@@ -605,7 +605,7 @@ var DataGridRenderer = {
       typesText += '</types>' + newLine;
       outputText += typesText;
     }
-    outputText += '<version>38.0</version>' + newLine;;
+    outputText += '<version>41.0</version>' + newLine;;
     outputText += '</Package>';
     return this.formatXml(outputText);
   },
