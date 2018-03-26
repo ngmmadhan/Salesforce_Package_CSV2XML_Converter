@@ -630,22 +630,17 @@ var DataGridRenderer = {
 			typesText = "";
 			membersText = "";
 			typesText += '<labels>' + newLine;
-			typesText += '<fullName>' + typeName + '</fullName>' + newLine;
-			typesText += '<language>' + typeName + '</language>' + newLine;
-			typesText += '<protected>' + typeName + '</protected>' + newLine;
-			typesText += '<value>' + typeName + '</value>' + newLine;
-		
 			typeName = Object.keys(groupedData)[i];
+			typesText += '<fullName>' + typeName + '</fullName>' + newLine;
+			typesText += '<language>' + 'en_US' + '</language>' + newLine;
+			typesText += '<protected>' + 'true' + '</protected>' + newLine;
 			for (var j = 0; j < groupedData[typeName].length; j++) {
-				membersText += '<members>' + groupedData[typeName][j].members + '</members>' + newLine;
+				membersText += '<value>' + groupedData[typeName][j].value + '</value>' + newLine;
 			}
 			typesText += membersText;
-			typesText += '<name>' + typeName + '</name>' + newLine;
 			typesText += '</labels>' + newLine;
 			outputText += typesText;
 		}
-		outputText += '<version>42.0</version>' + newLine;;
-		outputText += '</Package>';
 		return this.formatXml(outputText);
 	},
 

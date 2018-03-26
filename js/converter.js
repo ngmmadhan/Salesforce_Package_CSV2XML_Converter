@@ -31,7 +31,7 @@ function DataConverter(nodeId) {
                                 // {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
                                 // {"text":"XML - Nodes",            "id":"xml",              "notes":""},
                                 // {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
-                                {"text":"XML Package",      "id":"sfPackageXml",   "notes":""};
+                                {"text":"XML Package",      "id":"sfPackageXml",   "notes":""},
                                 {"text":"Custom Labels",      "id":"sfCustomLabelXml",   "notes":""}];
   this.outputDataType         = "sfPackageXml"; // Changed by Madhan
 
@@ -137,7 +137,11 @@ DataConverter.prototype.resize = function(w,h) {
 }
 
 DataConverter.prototype.convert = function() {
+	if(this.outputDataType==='sfPackageXml')
   this.inputText = 'types	members' + "\n" ; // Madhan - Hardcoded the headers
+	else
+		this.inputText = 'fullname value ' + "\n" ;
+
 	this.inputText += this.inputTextArea.val();
   this.outputText = "";
 
