@@ -140,7 +140,7 @@ DataConverter.prototype.convert = function() {
 	if(this.outputDataType==='sfPackageXml')
   this.inputText = 'types	members' + "\n" ; // Madhan - Hardcoded the headers
 	else
-		this.inputText = 'fullname value ' + "\n" ;
+		this.inputText = 'fullname	value' + "\n" ;
 
 	this.inputText += this.inputTextArea.val();
   this.outputText = "";
