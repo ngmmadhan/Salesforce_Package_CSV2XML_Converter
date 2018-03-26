@@ -32,6 +32,7 @@ function DataConverter(nodeId) {
                                 // {"text":"XML - Nodes",            "id":"xml",              "notes":""},
                                 // {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
                                 {"text":"XML Package",      "id":"sfPackageXml",   "notes":""}];
+                                {"text":"Custom Labels",      "id":"sfCustomLabelXml",   "notes":""}];
   this.outputDataType         = "sfPackageXml"; // Changed by Madhan
 
   this.columnDelimiter        = "\t";

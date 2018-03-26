@@ -605,10 +605,50 @@ var DataGridRenderer = {
       typesText += '</types>' + newLine;
       outputText += typesText;
     }
-    outputText += '<version>41.0</version>' + newLine;;
+    outputText += '<version>42.0</version>' + newLine;;
     outputText += '</Package>';
     return this.formatXml(outputText);
   },
+
+
+	sfCustomLabelXml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+
+		//inits...
+		var commentLine = "<!--";
+		var commentLineEnd = "-->";
+		var outputText = "";
+		var typesText = "";
+		var membersText = "";
+		var typeName = "";
+		var numRows = dataGrid.length;
+		var numColumns = headerNames.length;
+
+		// Group members of Same type
+		var groupedData = this.groupedData(dataGrid);
+
+		for (var i = 0; i < Object.keys(groupedData).length; i++) {
+			typesText = "";
+			membersText = "";
+			typesText += '<labels>' + newLine;
+			typesText += '<fullName>' + typeName + '</fullName>' + newLine;
+			typesText += '<language>' + typeName + '</language>' + newLine;
+			typesText += '<protected>' + typeName + '</protected>' + newLine;
+			typesText += '<value>' + typeName + '</value>' + newLine;
+		
+			typeName = Object.keys(groupedData)[i];
+			for (var j = 0; j < groupedData[typeName].length; j++) {
+				membersText += '<members>' + groupedData[typeName][j].members + '</members>' + newLine;
+			}
+			typesText += membersText;
+			typesText += '<name>' + typeName + '</name>' + newLine;
+			typesText += '</labels>' + newLine;
+			outputText += typesText;
+		}
+		outputText += '<version>42.0</version>' + newLine;;
+		outputText += '</Package>';
+		return this.formatXml(outputText);
+	},
+
 
   convertToArrayOfObjects: function(data) {
     var collection = data.slice(); // make a copy
