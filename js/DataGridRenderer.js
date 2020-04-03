@@ -12,7 +12,7 @@ var DataGridRenderer = {
   // Actionscript
   //---------------------------------------
 
-  as: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  as: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -51,7 +51,7 @@ var DataGridRenderer = {
   // ASP / VBScript
   //---------------------------------------
 
-  asp: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  asp: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "'";
     var commentLineEnd = "";
@@ -81,7 +81,7 @@ var DataGridRenderer = {
   // HTML Table
   //---------------------------------------
 
-  html: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  html: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
@@ -129,7 +129,7 @@ var DataGridRenderer = {
   // JSON properties
   //---------------------------------------
 
-  json: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  json: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -167,7 +167,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // JSON Array of Columns
   //---------------------------------------
-  jsonArrayCols: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  jsonArrayCols: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -204,7 +204,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // JSON Array of Rows
   //---------------------------------------
-  jsonArrayRows: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  jsonArrayRows: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -242,7 +242,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // JSON Dictionary
   //---------------------------------------
-  jsonDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  jsonDict: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -285,7 +285,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // MYSQL
   //---------------------------------------
-  mysql: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  mysql: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "/*";
     var commentLineEnd = "*/";
@@ -344,7 +344,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // PHP
   //---------------------------------------
-  php: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  php: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -383,7 +383,7 @@ var DataGridRenderer = {
   // Python dict
   //---------------------------------------
 
-  python: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  python: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
@@ -422,7 +422,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // Ruby
   //---------------------------------------
-  ruby: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  ruby: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "#";
     var commentLineEnd = "";
@@ -461,7 +461,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // XML Nodes
   //---------------------------------------
-  xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  xml: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
@@ -493,7 +493,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // XML properties
   //---------------------------------------
-  xmlProperties: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  xmlProperties: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
@@ -522,7 +522,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // XML Illustrator
   //---------------------------------------
-  xmlIllustrator: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  xmlIllustrator: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "<!--";
     var commentLineEnd = "-->";
@@ -574,7 +574,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // sfPackageXml Deploy Package
   //---------------------------------------
-  sfPackageXml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  sfPackageXml: function (dataGrid, headerNames, headerTypes, indent, newLine) {
 
     //inits...
     var commentLine = "<!--";
@@ -605,52 +605,52 @@ var DataGridRenderer = {
       typesText += '</types>' + newLine;
       outputText += typesText;
     }
-    outputText += '<version>42.0</version>' + newLine;;
+    outputText += '<version>48.0</version>' + newLine;;
     outputText += '</Package>';
     return this.formatXml(outputText);
   },
 
 
-	sfCustomLabelXml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  sfCustomLabelXml: function (dataGrid, headerNames, headerTypes, indent, newLine) {
 
-		//inits...
-		var commentLine = "<!--";
-		var commentLineEnd = "-->";
-		var outputText = "";
-		var typesText = "";
-		var membersText = "";
-		var typeName = "";
-		var numRows = dataGrid.length;
-		var numColumns = headerNames.length;
+    //inits...
+    var commentLine = "<!--";
+    var commentLineEnd = "-->";
+    var outputText = "";
+    var typesText = "";
+    var membersText = "";
+    var typeName = "";
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
 
-		// Group members of Same type
-		var groupedData = this.groupedData(dataGrid);
+    // Group members of Same type
+    var groupedData = this.groupedData(dataGrid);
 
-		for (var i = 0; i < Object.keys(groupedData).length; i++) {
-			typesText = "";
-			membersText = "";
-			typesText += '<labels>' + newLine;
-			typeName = Object.keys(groupedData)[i];
-			typesText += '<fullName>' + typeName + '</fullName>' + newLine;
-			typesText += '<language>' + 'en_US' + '</language>' + newLine;
-			typesText += '<protected>' + 'true' + '</protected>' + newLine;
-			for (var j = 0; j < groupedData[typeName].length; j++) {
-				membersText += '<value>' + groupedData[typeName][j].value + '</value>' + newLine;
-			}
-			typesText += membersText;
-			typesText += '</labels>' + newLine;
-			outputText += typesText;
-		}
-		return this.formatXml(outputText);
-	},
+    for (var i = 0; i < Object.keys(groupedData).length; i++) {
+      typesText = "";
+      membersText = "";
+      typesText += '<labels>' + newLine;
+      typeName = Object.keys(groupedData)[i];
+      typesText += '<fullName>' + typeName + '</fullName>' + newLine;
+      typesText += '<language>' + 'en_US' + '</language>' + newLine;
+      typesText += '<protected>' + 'true' + '</protected>' + newLine;
+      for (var j = 0; j < groupedData[typeName].length; j++) {
+        membersText += '<value>' + groupedData[typeName][j].value + '</value>' + newLine;
+      }
+      typesText += membersText;
+      typesText += '</labels>' + newLine;
+      outputText += typesText;
+    }
+    return this.formatXml(outputText);
+  },
 
 
-  convertToArrayOfObjects: function(data) {
+  convertToArrayOfObjects: function (data) {
     var collection = data.slice(); // make a copy
     var keys = collection.shift();
-    collection = collection.map(function(e) {
+    collection = collection.map(function (e) {
       var obj = {};
-      keys.forEach(function(key, i) {
+      keys.forEach(function (key, i) {
         obj[key] = e[i];
       });
       return obj;
@@ -658,22 +658,22 @@ var DataGridRenderer = {
     return collection;
   },
 
-  groupedData: function(data) {
+  groupedData: function (data) {
     var ObjArray = null;
     var groupedData = null;
     ObjArray = this.convertToArrayOfObjects(data);
-    groupedData = _.groupBy(ObjArray, function(innerArray) {
+    groupedData = _.groupBy(ObjArray, function (innerArray) {
       return innerArray.types;
     });
     return groupedData;
   },
 
-  formatXml: function(xml) {
+  formatXml: function (xml) {
     var formatted = '';
     var reg = /(>)(<)(\/*)/g;
     xml = xml.replace(reg, '$1\r\n$2$3');
     var pad = 0;
-    jQuery.each(xml.split('\r\n'), function(index, node) {
+    jQuery.each(xml.split('\r\n'), function (index, node) {
       var indent = 0;
       if (node.match(/.+<\/\w[^>]*>$/)) {
         indent = 0;
