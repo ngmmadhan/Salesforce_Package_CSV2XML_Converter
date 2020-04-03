@@ -633,9 +633,10 @@ var DataGridRenderer = {
       typeName = Object.keys(groupedData)[i];
       typesText += '<fullName>' + typeName + '</fullName>' + newLine;
       typesText += '<language>' + 'en_US' + '</language>' + newLine;
-      typesText += '<protected>' + 'true' + '</protected>' + newLine;
+      typesText += '<protected>' + 'false' + '</protected>' + newLine;
       for (var j = 0; j < groupedData[typeName].length; j++) {
-        membersText += '<value>' + groupedData[typeName][j].value + '</value>' + newLine;
+        membersText += '<shortDescription>' + groupedData[typeName][j].members + '</shortDescription>' + newLine;
+        membersText += '<value>' + groupedData[typeName][j].members + '</value>' + newLine;
       }
       typesText += membersText;
       typesText += '</labels>' + newLine;
