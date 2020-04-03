@@ -13,54 +13,54 @@ function DataConverter(nodeId) {
   // PUBLIC PROPERTIES
   //---------------------------------------
 
-  this.nodeId                 = nodeId;
-  this.node                   = $("#"+nodeId);
+  this.nodeId = nodeId;
+  this.node = $("#" + nodeId);
 
-  this.outputDataTypes        = [
-                                // {"text":"Actionscript",           "id":"as",               "notes":""},
-                                // {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
-                                // {"text":"HTML",                   "id":"html",             "notes":""},
-                                // {"text":"JSON - Properties",      "id":"json",             "notes":""},
-                                // {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
-                                // {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
-                                // {"text":"JSON - Dictionary",      "id":"jsonDict",         "notes":""},
-                                // {"text":"MySQL",                  "id":"mysql",            "notes":""},
-                                // {"text":"PHP",                    "id":"php",              "notes":""},
-                                // {"text":"Python - Dict",          "id":"python",           "notes":""},
-                                // {"text":"Ruby",                   "id":"ruby",             "notes":""},
-                                // {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
-                                // {"text":"XML - Nodes",            "id":"xml",              "notes":""},
-                                // {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
-                                {"text":"XML Package",      "id":"sfPackageXml",   "notes":""},
-                                {"text":"Custom Labels",      "id":"sfCustomLabelXml",   "notes":""}];
-  this.outputDataType         = "sfPackageXml"; // Changed by Madhan
+  this.outputDataTypes = [
+    // {"text":"Actionscript",           "id":"as",               "notes":""},
+    // {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
+    // {"text":"HTML",                   "id":"html",             "notes":""},
+    // {"text":"JSON - Properties",      "id":"json",             "notes":""},
+    // {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
+    // {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
+    // {"text":"JSON - Dictionary",      "id":"jsonDict",         "notes":""},
+    // {"text":"MySQL",                  "id":"mysql",            "notes":""},
+    // {"text":"PHP",                    "id":"php",              "notes":""},
+    // {"text":"Python - Dict",          "id":"python",           "notes":""},
+    // {"text":"Ruby",                   "id":"ruby",             "notes":""},
+    // {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
+    // {"text":"XML - Nodes",            "id":"xml",              "notes":""},
+    // {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
+    { "text": "XML Package", "id": "sfPackageXml", "notes": "" },
+    { "text": "Custom Labels", "id": "sfCustomLabelXml", "notes": "" }];
+  this.outputDataType = "sfPackageXml"; // Changed by Madhan
 
-  this.columnDelimiter        = "\t";
-  this.rowDelimiter           = "\n";
+  this.columnDelimiter = "\t";
+  this.rowDelimiter = "\n";
 
-  this.inputTextArea          = {};
-  this.outputTextArea         = {};
+  this.inputTextArea = {};
+  this.outputTextArea = {};
 
-  this.inputHeader            = {};
-  this.outputHeader           = {};
-  this.dataSelect             = {};
+  this.inputHeader = {};
+  this.outputHeader = {};
+  this.dataSelect = {};
 
-  this.inputText              = "";
-  this.outputText             = "";
+  this.inputText = "";
+  this.outputText = "";
 
-  this.newLine                = "\n";
-  this.indent                 = "  ";
+  this.newLine = "\n";
+  this.indent = "  ";
 
-  this.commentLine            = "//";
-  this.commentLineEnd         = "";
-  this.tableName              = "MrDataConverter"
+  this.commentLine = "//";
+  this.commentLineEnd = "";
+  this.tableName = "MrDataConverter"
 
-  this.useUnderscores         = true;
-  this.headersProvided        = true;
-  this.downcaseHeaders        = true;
-  this.upcaseHeaders          = false;
-  this.includeWhiteSpace      = true;
-  this.useTabsForIndent       = false;
+  this.useUnderscores = true;
+  this.headersProvided = true;
+  this.downcaseHeaders = true;
+  this.upcaseHeaders = false;
+  this.includeWhiteSpace = true;
+  this.useTabsForIndent = false;
 
 }
 
@@ -68,21 +68,21 @@ function DataConverter(nodeId) {
 // PUBLIC METHODS
 //---------------------------------------
 
-DataConverter.prototype.create = function(w,h) {
+DataConverter.prototype.create = function (w, h) {
   var self = this;
 
   //build HTML for converter
   this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste. No data on hand? <a href="#" id="insertSample">Use sample</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
-    for (var i=0; i < this.outputDataTypes.length; i++) {
+  for (var i = 0; i < this.outputDataTypes.length; i++) {
 
-      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
-              + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
-              + '>'
-              + this.outputDataTypes[i]["text"]+'</option>';
-    };
-    outputHeaderText += '</select><span class="subhead" id="outputNotes"></span></p></div>';
+    outputHeaderText += '<option value="' + this.outputDataTypes[i]["id"] + '" '
+      + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
+      + '>'
+      + this.outputDataTypes[i]["text"] + '</option>';
+  };
+  outputHeaderText += '</select><span class="subhead" id="outputNotes"></span></p></div>';
   this.outputHeader = $(outputHeaderText);
   this.outputTextArea = $('<textarea class="textInputs" id="dataOutput"></textarea>');
 
@@ -101,48 +101,48 @@ DataConverter.prototype.create = function(w,h) {
   //   self.convert();
   // });
 
-  this.outputTextArea.click(function(evt){this.select();});
+  this.outputTextArea.click(function (evt) { this.select(); });
 
 
-  $("#insertSample").bind('click',function(evt){
+  $("#insertSample").bind('click', function (evt) {
     evt.preventDefault();
     self.insertSampleData();
     self.convert();
-    _gaq.push(['_trackEvent', 'SampleData','InsertGeneric']);
+    _gaq.push(['_trackEvent', 'SampleData', 'InsertGeneric']);
   });
 
-  $("#dataInput").keyup(function() {self.convert()});
-  $("#dataInput").change(function() {
+  $("#dataInput").keyup(function () { self.convert() });
+  $("#dataInput").change(function () {
     self.convert();
-    _gaq.push(['_trackEvent', 'DataType',self.outputDataType]);
+    _gaq.push(['_trackEvent', 'DataType', self.outputDataType]);
   });
 
-  $("#dataSelector").bind('change',function(evt){
-       self.outputDataType = $(this).val();
-       self.convert();
-     });
+  $("#dataSelector").bind('change', function (evt) {
+    self.outputDataType = $(this).val();
+    self.convert();
+  });
 
-  this.resize(w,h);
+  this.resize(w, h);
 }
 
-DataConverter.prototype.resize = function(w,h) {
+DataConverter.prototype.resize = function (w, h) {
 
   var paneWidth = w;
-  var paneHeight = (h-90)/2-20;
+  var paneHeight = (h - 90) / 2 - 20;
 
-  this.node.css({width:paneWidth});
-  this.inputTextArea.css({width:paneWidth-20,height:paneHeight});
-  this.outputTextArea.css({width: paneWidth-20, height:paneHeight});
+  this.node.css({ width: paneWidth });
+  this.inputTextArea.css({ width: paneWidth - 20, height: paneHeight });
+  this.outputTextArea.css({ width: paneWidth - 20, height: paneHeight });
 
 }
 
-DataConverter.prototype.convert = function() {
-	if(this.outputDataType==='sfPackageXml')
-  this.inputText = 'types	members' + "\n" ; // Madhan - Hardcoded the headers
-	else
-		this.inputText = 'fullname	value' + "\n" ;
+DataConverter.prototype.convert = function () {
+  if (this.outputDataType === 'sfPackageXml' || this.outputDataType === 'sfCustomLabelXml')
+    this.inputText = 'types	members' + "\n"; // Madhan - Hardcoded the headers
+  else
+    this.inputText = 'fullname	value' + "\n";
 
-	this.inputText += this.inputTextArea.val();
+  this.inputText += this.inputTextArea.val();
   this.outputText = "";
 
   //make sure there is input data before converting...
@@ -160,7 +160,7 @@ DataConverter.prototype.convert = function() {
     CSVParser.resetLog();
     var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
 
-    var dataGrid =  parseOutput.dataGrid;
+    var dataGrid = parseOutput.dataGrid;
     var headerNames = parseOutput.headerNames;
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
@@ -174,7 +174,7 @@ DataConverter.prototype.convert = function() {
 }
 
 
-DataConverter.prototype.insertSampleData = function() {
+DataConverter.prototype.insertSampleData = function () {
   // this.inputTextArea.val("NAME\tVALUE\tCOLOR\tDATE\nAlan\t12\tblue\tSep. 25, 2009\nShan\t13\t\"green\tblue\"\tSep. 27, 2009\nJohn\t45\torange\tSep. 29, 2009\nMinna\t27\tteal\tSep. 30, 2009");
-	this.inputTextArea.val("ApexPage\tCustomerDetailPage\nApexPage\tCustomerEditPage\nAuraDefinitionBundle\tCustomerDetailComponent\nCustomLabel\tCustomerDetailPage_Header\nAuraDefinitionBundle\tCustomerDetailApp\n");
+  this.inputTextArea.val("ApexPage\tCustomerDetailPage\nApexPage\tCustomerEditPage\nAuraDefinitionBundle\tCustomerDetailComponent\nCustomLabel\tCustomerDetailPage_Header\nAuraDefinitionBundle\tCustomerDetailApp\n");
 }
