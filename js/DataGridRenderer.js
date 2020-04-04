@@ -635,7 +635,7 @@ var DataGridRenderer = {
       typesText += '<language>' + 'en_US' + '</language>' + newLine;
       typesText += '<protected>' + 'false' + '</protected>' + newLine;
       for (var j = 0; j < groupedData[typeName].length; j++) {
-        membersText += '<shortDescription>' + groupedData[typeName][j].members + '</shortDescription>' + newLine;
+        membersText += '<shortDescription>' + typeName + '</shortDescription>' + newLine;
         membersText += '<value>' + groupedData[typeName][j].members + '</value>' + newLine;
       }
       typesText += membersText;
